@@ -13,4 +13,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Java JDK for Backend
+        uses: actions/setup-java@v3.14.1
+        with:
+          java-version: 17
+
+      - name: Set up backend dependencies and build
+        run: |
+          cd Backend/viabackend
+          ./mvnw clean compile package
+
+      - name: Run backend tests if any
+        run: |
+          cd Backend/viabackend
+          ./mvnw test
+
+      - name: Setup Node.js environment for Frontend
+        uses: actions/setup-node@v3.9.1
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies and build
+        run: |
+          cd Frontend/VIA_Tabloid_Frontend
+          npm install
+          npm run build
+
       
