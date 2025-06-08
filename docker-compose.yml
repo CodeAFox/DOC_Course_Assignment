@@ -1,0 +1,38 @@
+services:
+  db:
+    image: "postgres:17.4-alpine"
+    restart: always
+    container_name: "doc-backend-database"
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=doc-ca-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Why1sthisn33ded
+  backend:
+    image: "via-backend:latest"
+    build: 
+      context: ./Backend/viabackend
+    container_name: "doc-backend"
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/doc-ca-db 
+      - SPRING_DATASOURCE_USERNAME=postgres 
+      - SPRING_DATASOURCE_PASSWORD=Why1sthisn33ded 
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  frontend:
+    image: "doc-frontend:latest"
+    build: 
+      context: ./Frontend/VIA_Tabloid_Frontend
+    ports:
+      - 3000:80
+    depends_on:
+      - backend
+volumes:
+  db:
+    driver: local
