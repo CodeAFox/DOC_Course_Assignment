@@ -27,7 +27,7 @@ jobs:
       - name: Set up backend dependencies and build
         run: |
           cd Backend/viabackend
-          ./mvnw clean compile package
+          ./mvnw clean compile package -DskipTests
 
       - name: Run backend tests if any
         run: |
