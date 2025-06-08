@@ -1,0 +1,32 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build_frontend:
+    uses: ./.github/workflows/.build-docker-image.yml
+    with:
+      image_name: 'doc-frontend'
+      image_tag: ${{ github.sha }}
+      dockerfile_location: './Backend/viabackend'
+      docker_context: './Backend/viabackend'  
+      push_to_registry: 'true'
+      
+  build_backend:
+    uses: ./.github/workflows/.build-docker-image.yml
+    with:
+      image_name: 'via-backend'
+      image_tag: ${{ github.sha }}
+      dockerfile_location: './Frontend/VIA_Tabloid_Frontend'
+      docker_context: './Frontend/VIA_Tabloid_Frontend'  
+      push_to_registry: 'true'
+
+  
