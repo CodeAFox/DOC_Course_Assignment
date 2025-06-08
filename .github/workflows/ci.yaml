@@ -19,6 +19,11 @@ jobs:
           java-version: 17
           distribution: temurin
 
+      - name: Set execute permissions for mvnw
+        run: | 
+          cd Backend/viabackend
+          chmod +x mvnw
+
       - name: Set up backend dependencies and build
         run: |
           cd Backend/viabackend
