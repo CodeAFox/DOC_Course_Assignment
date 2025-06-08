@@ -22,6 +22,7 @@ spec:
     spec:
       containers:
         - image: doc-frontend:v2.0.0
+          imagePullPolicy: Never
           name: frontend
           ports:
             - containerPort: 80
